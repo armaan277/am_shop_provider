@@ -1,6 +1,7 @@
 import 'package:am_shop_provider/constant/constants.dart';
 import 'package:am_shop_provider/provider/am_shop_provider.dart';
 import 'package:am_shop_provider/screens/info_screen.dart';
+import 'package:am_shop_provider/screens/shopping_bag_screen.dart';
 import 'package:am_shop_provider/widgets/filter_content.dart';
 import 'package:am_shop_provider/widgets/home_chip_selector.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  String select = 'All';
+  TextEditingController searchController = TextEditingController();
 
   @override
   void initState() {
@@ -25,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final providerRead = context.read<ProductProvider>();
-
+    final providerWatch = context.watch<ProductProvider>();
     return Scaffold(
       backgroundColor: AppColors.appBackgroundColor,
       appBar: AppBar(
@@ -34,8 +35,15 @@ class _HomeScreenState extends State<HomeScreen> {
         centerTitle: true,
         actions: [
           IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.shopping_cart),
+            onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                return ShoppingBagScreen();
+              }));
+            },
+            icon: Badge(
+              label: Text(providerWatch.cartCounts.toString()),
+              child: Icon(Icons.shopping_cart),
+            ),
           ),
         ],
       ),
@@ -51,43 +59,40 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 HomeChipSelector(
                   title: 'All',
-                  select: select == 'All' ? 'select' : '',
+                  select: providerRead.select == 'All' ? 'select' : '',
                   onTap: () {
-                    select = 'All';
-                    setState(() {});
+                    providerRead.selectCategory('All');
                   },
                 ),
                 HomeChipSelector(
                   title: "Men's",
                   onTap: () {
-                    select = 'Men';
-                    setState(() {});
+                    providerRead.selectCategory("men's clothing");
                   },
-                  select: select == 'Men' ? 'select' : '',
+                  select:
+                      providerRead.select == "men's clothing" ? 'select' : '',
                 ),
                 HomeChipSelector(
                   title: "Women's",
                   onTap: () {
-                    select = 'women';
-                    setState(() {});
+                    providerRead.selectCategory("women's clothing");
                   },
-                  select: select == 'women' ? 'select' : '',
+                  select:
+                      providerRead.select == "women's clothing" ? 'select' : '',
                 ),
                 HomeChipSelector(
                   title: 'Jewelery',
                   onTap: () {
-                    select = 'jewelery';
-                    setState(() {});
+                    providerRead.selectCategory('jewelery');
                   },
-                  select: select == 'jewelery' ? 'select' : '',
+                  select: providerRead.select == 'jewelery' ? 'select' : '',
                 ),
                 HomeChipSelector(
                   title: 'Electronics',
                   onTap: () {
-                    select = 'electronics';
-                    setState(() {});
+                    providerRead.selectCategory('electronics');
                   },
-                  select: select == 'electronics' ? 'select' : '',
+                  select: providerRead.select == 'electronics' ? 'select' : '',
                 ),
               ],
             ),
@@ -119,6 +124,10 @@ class _HomeScreenState extends State<HomeScreen> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10.0),
             child: TextField(
+              onChanged: (value) {
+                setState(() {});
+              },
+              controller: searchController,
               decoration: InputDecoration(
                 prefixIcon: Icon(
                   Icons.search,
@@ -134,66 +143,127 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ),
-          SizedBox(height: 10),
           Expanded(
-            child: ListView.separated(
-              separatorBuilder: (context, index) => SizedBox(height: 10),
-              itemCount: providerRead.mapResponseLists.length,
-              itemBuilder: (context, index) {
-                final product = providerRead.mapResponseLists[index];
-                return GestureDetector(
-                  onTap: () {
-                    Navigator.of(context)
-                        .push(MaterialPageRoute(builder: (context) {
-                      return InfoScreen();
-                    }));
-                  },
-                  child: Container(
-                    margin: EdgeInsets.symmetric(horizontal: 10.0),
-                    height: 150,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          offset: Offset(2, 2),
-                          blurRadius: 12,
-                          color: Colors.grey.shade200,
-                        ),
-                      ],
-                    ),
-                    child: Row(
+            child: buildProductsListView(context),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget buildProductsListView(BuildContext context) {
+    final providerRead = context.read<ProductProvider>();
+
+    final search = providerRead.select == 'All'
+        ? providerRead.products
+            .where((ele) => ele.title.contains(searchController.text))
+            .toList()
+        : providerRead.products.where((ele) {
+            return ele.title.contains(searchController.text) &&
+                ele.category == providerRead.select;
+          }).toList();
+
+    return ListView.builder(
+      itemCount: search.length,
+      itemBuilder: (context, index) {
+        final product = search[index];
+
+        final contains = !providerRead.cartProducts.contains(product);
+
+        return GestureDetector(
+          onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+              return InfoScreen(product: product);
+            }));
+          },
+          child: Container(
+            margin: EdgeInsets.all(8.0),
+            height: 150,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  offset: Offset(2, 2),
+                  blurRadius: 12,
+                  color: Colors.grey.shade200,
+                ),
+              ],
+            ),
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 150,
+                  child: Image.network(
+                    product.image,
+                  ),
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(
-                          width: 150,
-                          child: Image.network(
-                            product.image,
+                        Text(
+                          product.title,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 15,
                           ),
                         ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(product.title),
-                            Text('${product.price}'),
-                            Text('${product.rating.rate}'),
-                            FilledButton(
-                              style: FilledButton.styleFrom(
-                                backgroundColor: AppColors.mainAppColor,
-                              ),
-                              onPressed: () {},
-                              child: Text('Add to Cart'),
+                        SizedBox(height: 4),
+                        Text(
+                          '\$${product.price}',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                        Text(
+                          '⭐ ${product.rating.rate} / ${product.rating.count}',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16,
+                            color: Colors.black54,
+                          ),
+                        ),
+                        SizedBox(height: 4),
+                        SizedBox(
+                          width: double.infinity,
+                          child: FilledButton(
+                            style: FilledButton.styleFrom(
+                              backgroundColor: AppColors.mainAppColor,
                             ),
-                          ],
+                            onPressed: () {
+                              if (contains) {
+                                providerRead.cartProducts.add(product);
+                                providerRead.cartCountsPlus();
+                              } else {
+                                Navigator.of(context)
+                                    .push(MaterialPageRoute(builder: (context) {
+                                  return ShoppingBagScreen();
+                                }));
+                              }
+                            },
+                            child: Text(
+                              contains ? 'Add to Cart' : 'Go to Bag',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ),
                         ),
                       ],
                     ),
                   ),
-                );
-              },
+                ),
+              ],
             ),
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 }
