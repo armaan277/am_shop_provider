@@ -2,6 +2,7 @@ import 'package:am_shop_provider/constant/constants.dart';
 import 'package:am_shop_provider/model/am_shop.dart';
 import 'package:am_shop_provider/provider/am_shop_provider.dart';
 import 'package:am_shop_provider/screens/shopping_bag_screen.dart';
+import 'package:am_shop_provider/widgets/build_similar_products.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -84,18 +85,57 @@ class InfoScreen extends StatelessWidget {
                           ),
                         ),
                         SizedBox(height: 10.0),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 60.0),
-                          child: Text(
-                            product.description,
-                            textAlign: TextAlign.justify,
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              color: Colors.black54,
-                              fontSize: 16,
+                        Text(
+                          product.description,
+                          textAlign: TextAlign.justify,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black54,
+                            fontSize: 16,
+                          ),
+                        ),
+                        SizedBox(height: 10.0),
+                        SizedBox(
+                          height: 55,
+                          width: double.infinity,
+                          child: FilledButton(
+                            style: FilledButton.styleFrom(
+                                backgroundColor: AppColors.mainAppColor,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5.0),
+                                )),
+                            onPressed: () {
+                              if (contains) {
+                                providerRead.cartProducts.add(product);
+                                providerRead.cartCountsPlus();
+                              } else {
+                                Navigator.of(context)
+                                    .push(MaterialPageRoute(builder: (context) {
+                                  return ShoppingBagScreen();
+                                }));
+                              }
+                            },
+                            child: Text(
+                              containsWatch ? 'Add to Cart' : 'Go to Bag',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                         ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: Text(
+                            'Similar Products',
+                            style: TextStyle(
+                              color: Colors.black54,
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        BuildSimilarProducts(product: product),
                       ],
                     ),
                   ],
@@ -104,33 +144,6 @@ class InfoScreen extends StatelessWidget {
             ),
           ),
         ],
-      ),
-      bottomSheet: GestureDetector(
-        onTap: () {
-          if (contains) {
-            providerRead.cartProducts.add(product);
-            providerRead.cartCountsPlus();
-          } else {
-            Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-              return ShoppingBagScreen();
-            }));
-          }
-        },
-        child: Container(
-          width: double.infinity,
-          height: 60,
-          color: AppColors.mainAppColor,
-          child: Center(
-            child: Text(
-              containsWatch ? 'Add to Cart' : 'Go to Bag',
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-              ),
-            ),
-          ),
-        ),
       ),
     );
   }

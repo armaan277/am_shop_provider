@@ -176,7 +176,8 @@ class _HomeScreenState extends State<HomeScreen> {
               return InfoScreen(product: product);
             }));
           },
-          child: Container(
+          child: 
+          Container(
             margin: EdgeInsets.all(8.0),
             height: 150,
             decoration: BoxDecoration(
@@ -262,8 +263,10 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
+       
         );
       },
     );
   }
+
 }

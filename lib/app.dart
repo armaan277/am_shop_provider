@@ -1,5 +1,6 @@
 import 'package:am_shop_provider/provider/am_shop_provider.dart';
 import 'package:am_shop_provider/screens/home_screen.dart';
+import 'package:am_shop_provider/widgets/build_similar_products.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
