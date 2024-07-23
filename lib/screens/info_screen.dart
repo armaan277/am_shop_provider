@@ -1,5 +1,5 @@
 import 'package:am_shop_provider/constant/constants.dart';
-import 'package:am_shop_provider/model/am_shop.dart';
+import 'package:am_shop_provider/model/product.dart';
 import 'package:am_shop_provider/provider/am_shop_provider.dart';
 import 'package:am_shop_provider/screens/shopping_bag_screen.dart';
 import 'package:am_shop_provider/widgets/build_similar_products.dart';
@@ -19,6 +19,7 @@ class InfoScreen extends StatelessWidget {
     final contains = !providerRead.cartProducts.contains(product);
     final containsWatch =
         !context.watch<ProductProvider>().cartProducts.contains(product);
+
     return Scaffold(
       backgroundColor: AppColors.appBackgroundColor,
       appBar: AppBar(
@@ -30,6 +31,7 @@ class InfoScreen extends StatelessWidget {
         children: [
           Expanded(
             child: Container(
+              padding: EdgeInsets.all(20.0),
               width: double.infinity,
               color: Colors.white,
               child: Image.network(
@@ -76,13 +78,26 @@ class InfoScreen extends StatelessWidget {
                             fontSize: 16,
                           ),
                         ),
-                        Text(
-                          '\$${product.price}',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.green,
-                            fontSize: 20,
-                          ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Price: \$${product.price}',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.green,
+                                fontSize: 18,
+                              ),
+                            ),
+                            Text(
+                              'In Stock: ${product.rating.count}',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.red,
+                                fontSize: 18,
+                              ),
+                            ),
+                          ],
                         ),
                         SizedBox(height: 10.0),
                         Text(

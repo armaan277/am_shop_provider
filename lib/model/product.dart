@@ -1,13 +1,15 @@
+import 'product_rating.dart';
+
 class Product {
   final int id;
   final String title;
   final String description;
-  final num price;
+   num price;
   final String category;
   final String image;
   final Rating rating;
 
-  const Product({
+   Product({
     required this.id,
     required this.title,
     required this.description,
@@ -30,19 +32,3 @@ class Product {
   }
 }
 
-class Rating {
-  final num rate;
-  final int count;
-
-  Rating({
-    required this.rate,
-    required this.count,
-  });
-
-  factory Rating.fromMap(Map mapRating) {
-    return Rating(
-      rate: mapRating['rate'] ?? 0,
-      count: mapRating['count'] ?? 0,
-    );
-  }
-}

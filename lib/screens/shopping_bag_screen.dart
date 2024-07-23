@@ -3,6 +3,8 @@ import 'package:am_shop_provider/provider/am_shop_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../widgets/bottomsheet_select_size.dart';
+
 class ShoppingBagScreen extends StatefulWidget {
   const ShoppingBagScreen({super.key});
 
@@ -22,7 +24,7 @@ class _ShoppingBagScreenState extends State<ShoppingBagScreen> {
         centerTitle: true,
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 10.0),
+        padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 8.0),
         child: Column(
           children: [
             Expanded(
@@ -32,7 +34,17 @@ class _ShoppingBagScreenState extends State<ShoppingBagScreen> {
                 itemBuilder: (context, index) {
                   final cartProducts = providerRead.cartProducts[index];
                   return Container(
-                    color: AppColors.appBackgroundColor,
+                    decoration: BoxDecoration(
+                      color: AppColors.appBackgroundColor,
+                      boxShadow: [
+                        BoxShadow(
+                          offset: Offset(2, 2),
+                          blurRadius: 8.0,
+                          color: Colors.grey.shade300,
+                        ),
+                      ],
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
                     height: 160,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -41,8 +53,13 @@ class _ShoppingBagScreenState extends State<ShoppingBagScreen> {
                         Row(
                           children: [
                             Container(
-                              color: Colors.white,
-                              width: 160,
+                              padding: EdgeInsets.symmetric(vertical: 8.0),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              height: 180,
+                              width: 140,
                               child: Image.network(
                                 cartProducts.image,
                               ),
@@ -50,49 +67,85 @@ class _ShoppingBagScreenState extends State<ShoppingBagScreen> {
                           ],
                         ),
                         Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text('A & M'),
-                              Text(
-                                overflow: TextOverflow.ellipsis,
-                                cartProducts.title,
-                              ),
-                              Text('Sold by A & M Codeilm...'),
-                              Text('\$${cartProducts.price}'),
-                              Row(
-                                children: [
-                                  Container(
-                                    padding: EdgeInsets.all(4.0),
-                                    color: Colors.white,
-                                    child: Row(
-                                      children: [
-                                        Text('Sized: M'),
-                                        Icon(Icons.arrow_drop_down),
-                                      ],
-                                    ),
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 12.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(height: 7),
+                                Text(
+                                  'A & M',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                  Container(
-                                    padding: EdgeInsets.all(4.0),
-                                    color: Colors.white,
-                                    child: Row(
-                                      children: [
-                                        Text('Qty: 1'),
-                                        Icon(Icons.arrow_drop_down),
-                                      ],
-                                    ),
+                                ),
+                                SizedBox(height: 6.0),
+                                Text(
+                                  overflow: TextOverflow.ellipsis,
+                                  cartProducts.title,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w500,
                                   ),
-                                ],
-                              ),
-                              RichText(
-                                text: TextSpan(
+                                ),
+                                Text(
+                                  'Sold by A & M Codeilm...',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                  ),
+                                ),
+                                SizedBox(height: 6.0),
+                                Text(
+                                  '\$${cartProducts.price}',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Row(
                                   children: [
-                                    TextSpan(text: '7 days'),
-                                    TextSpan(text: 'return available'),
+                                    // BottomsheetSelectSize(
+                                    //     product:
+                                    //         providerRead.cartProducts[index]),
+                                    SizedBox(width: 6),
+                                    GestureDetector(
+                                      onTap: () {
+                                        debugPrint('First Container2');
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.all(4.0),
+                                        color: Colors.white,
+                                        child: Row(
+                                          children: [
+                                            Text('Qty: 1'),
+                                            Icon(Icons.arrow_drop_down),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
                                   ],
                                 ),
-                              ),
-                            ],
+                                SizedBox(height: 4),
+                                RichText(
+                                  text: TextSpan(
+                                    children: [
+                                      TextSpan(
+                                        text: '7 days ',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                      TextSpan(
+                                        text: 'return available',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                         IconButton(

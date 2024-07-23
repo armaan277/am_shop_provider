@@ -17,17 +17,28 @@ class HomeChipSelector extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: EdgeInsets.all(10.0),
+        margin: EdgeInsets.symmetric(horizontal: 10.0),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5.0),
           color: select == 'select' ? AppColors.mainAppColor : Colors.white,
-          border: select == 'select' ? Border.all(width: 0.0) : Border.all(),
+          border: select == 'select'
+              ? Border.all(color: AppColors.mainAppColor)
+              : Border.all(color: AppColors.mainAppColor),
         ),
-        child: Text(
-          title,
-          style: TextStyle(
-            color: select == 'select' ? Colors.white : AppColors.mainAppColor,
-            fontWeight: FontWeight.w500,
+        child: Center(
+          child: Padding(
+            padding:
+                const EdgeInsets.symmetric(vertical: 10.0, horizontal: 18.0),
+            child: Text(
+              title,
+              style: TextStyle(
+                color:
+                    select == 'select' ? Colors.white : AppColors.mainAppColor,
+                fontWeight:
+                    select == 'select' ? FontWeight.bold : FontWeight.w500,
+                fontSize: 15,
+              ),
+            ),
           ),
         ),
       ),

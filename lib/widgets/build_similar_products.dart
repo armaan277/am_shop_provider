@@ -1,5 +1,5 @@
 import 'package:am_shop_provider/constant/constants.dart';
-import 'package:am_shop_provider/model/am_shop.dart';
+import 'package:am_shop_provider/model/product.dart';
 import 'package:am_shop_provider/provider/am_shop_provider.dart';
 import 'package:am_shop_provider/screens/info_screen.dart';
 import 'package:am_shop_provider/screens/shopping_bag_screen.dart';
