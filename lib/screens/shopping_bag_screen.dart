@@ -3,6 +3,7 @@ import 'package:am_shop_provider/provider/am_shop_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../widgets/bottomsheet_select_qty.dart';
 import '../widgets/bottomsheet_select_size.dart';
 
 class ShoppingBagScreen extends StatefulWidget {
@@ -53,7 +54,10 @@ class _ShoppingBagScreenState extends State<ShoppingBagScreen> {
                         Row(
                           children: [
                             Container(
-                              padding: EdgeInsets.symmetric(vertical: 8.0),
+                              padding: EdgeInsets.symmetric(
+                                vertical: 8.0,
+                                horizontal: 4.0,
+                              ),
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(10.0),
@@ -102,25 +106,11 @@ class _ShoppingBagScreenState extends State<ShoppingBagScreen> {
                                 ),
                                 Row(
                                   children: [
-                                    // BottomsheetSelectSize(
-                                    //     product:
-                                    //         providerRead.cartProducts[index]),
-                                    SizedBox(width: 6),
-                                    GestureDetector(
-                                      onTap: () {
-                                        debugPrint('First Container2');
-                                      },
-                                      child: Container(
-                                        padding: EdgeInsets.all(4.0),
-                                        color: Colors.white,
-                                        child: Row(
-                                          children: [
-                                            Text('Qty: 1'),
-                                            Icon(Icons.arrow_drop_down),
-                                          ],
-                                        ),
-                                      ),
+                                    BottomsheetSelectSize(
+                                      product: providerRead.products[index],
                                     ),
+                                    SizedBox(width: 6),
+                                    BottomsheetSelectQty(),
                                   ],
                                 ),
                                 SizedBox(height: 4),
