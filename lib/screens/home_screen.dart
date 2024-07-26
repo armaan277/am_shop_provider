@@ -1,3 +1,4 @@
+import 'package:am_shop_provider/app_drawer.dart';
 import 'package:am_shop_provider/constant/constants.dart';
 import 'package:am_shop_provider/provider/am_shop_provider.dart';
 import 'package:am_shop_provider/screens/shopping_bag_screen.dart';
@@ -46,7 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      drawer: Drawer(),
+      drawer: AppDrawer(),
       body: Column(
         children: [
           Container(

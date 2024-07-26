@@ -94,120 +94,134 @@ class _BottomsheetSelectSizeState extends State<BottomsheetSelectSize> {
                     vertical: 10.0,
                     horizontal: 12.0,
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      // for (int i = 0; i < selectSize.length; i++)
-                      GestureDetector(
-                        onTap: () {
-                          selectSize = 'S';
-                        },
-                        child: Container(
-                          height: 55,
-                          width: 55,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(50.0),
-                            border: selectSize == 'S'
-                                ? Border.all(color: AppColors.mainAppColor)
-                                : Border.all(),
-                          ),
-                          child: Center(
-                            child: Text('S'),
-                          ),
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          selectSize = 'M';
-                        },
-                        child: Container(
-                          height: 55,
-                          width: 55,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(50.0),
-                            border: selectSize == 'M'
-                                ? Border.all(color: AppColors.mainAppColor)
-                                : Border.all(),
-                          ),
-                          child: Center(
-                            child: Text('M'),
+                  child:
+                      StatefulBuilder(builder: (context, StateSetter setState) {
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              selectSize = 'S';
+                            });
+                          },
+                          child: Container(
+                            height: 55,
+                            width: 55,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(50.0),
+                              border: selectSize == 'S'
+                                  ? Border.all(color: AppColors.mainAppColor)
+                                  : Border.all(),
+                            ),
+                            child: Center(
+                              child: Text('S'),
+                            ),
                           ),
                         ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          selectSize = 'L';
-                        },
-                        child: Container(
-                          height: 55,
-                          width: 55,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(50.0),
-                            border: selectSize == 'L'
-                                ? Border.all(color: AppColors.mainAppColor)
-                                : Border.all(),
-                          ),
-                          child: Center(
-                            child: Text('L'),
-                          ),
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          selectSize = 'XS';
-                        },
-                        child: Container(
-                          height: 55,
-                          width: 55,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(50.0),
-                            border: selectSize == 'XS'
-                                ? Border.all(color: AppColors.mainAppColor)
-                                : Border.all(),
-                          ),
-                          child: Center(
-                            child: Text('XS'),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              selectSize = 'M';
+                            });
+                          },
+                          child: Container(
+                            height: 55,
+                            width: 55,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(50.0),
+                              border: selectSize == 'M'
+                                  ? Border.all(color: AppColors.mainAppColor)
+                                  : Border.all(),
+                            ),
+                            child: Center(
+                              child: Text('M'),
+                            ),
                           ),
                         ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          selectSize = 'XL';
-                        },
-                        child: Container(
-                          height: 55,
-                          width: 55,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(50.0),
-                            border: selectSize == 'XL'
-                                ? Border.all(color: AppColors.mainAppColor)
-                                : Border.all(),
-                          ),
-                          child: Center(
-                            child: Text('XL'),
-                          ),
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          selectSize = 'XXL';
-                        },
-                        child: Container(
-                          height: 55,
-                          width: 55,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(50.0),
-                            border: selectSize == 'XXL'
-                                ? Border.all(color: AppColors.mainAppColor)
-                                : Border.all(),
-                          ),
-                          child: Center(
-                            child: Text('XXL'),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              selectSize = 'L';
+                            });
+                          },
+                          child: Container(
+                            height: 55,
+                            width: 55,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(50.0),
+                              border: selectSize == 'L'
+                                  ? Border.all(color: AppColors.mainAppColor)
+                                  : Border.all(),
+                            ),
+                            child: Center(
+                              child: Text('L'),
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              selectSize = 'XS';
+                            });
+                          },
+                          child: Container(
+                            height: 55,
+                            width: 55,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(50.0),
+                              border: selectSize == 'XS'
+                                  ? Border.all(color: AppColors.mainAppColor)
+                                  : Border.all(),
+                            ),
+                            child: Center(
+                              child: Text('XS'),
+                            ),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              selectSize = 'XL';
+                            });
+                          },
+                          child: Container(
+                            height: 55,
+                            width: 55,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(50.0),
+                              border: selectSize == 'XL'
+                                  ? Border.all(color: AppColors.mainAppColor)
+                                  : Border.all(),
+                            ),
+                            child: Center(
+                              child: Text('XL'),
+                            ),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              selectSize = 'XXL';
+                            });
+                          },
+                          child: Container(
+                            height: 55,
+                            width: 55,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(50.0),
+                              border: selectSize == 'XXL'
+                                  ? Border.all(color: AppColors.mainAppColor)
+                                  : Border.all(),
+                            ),
+                            child: Center(
+                              child: Text('XXL'),
+                            ),
+                          ),
+                        ),
+                      ],
+                    );
+                  }),
                 ),
                 GestureDetector(
                   onTap: () {

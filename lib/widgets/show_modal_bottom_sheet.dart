@@ -1,3 +1,4 @@
+import 'package:am_shop_provider/constant/constants.dart';
 import 'package:am_shop_provider/provider/am_shop_provider.dart';
 import 'package:am_shop_provider/widgets/list_tile_custom.dart';
 import 'package:flutter/material.dart';
@@ -48,6 +49,7 @@ class ShowModalBottomSheet extends StatelessWidget {
                     providerRead.isFiltersDataChange('PRICE: HIGH TO LOW');
                   },
                   icon: Icons.price_change,
+                  color: Colors.green,
                   title: 'PRICE: HIGH TO LOW',
                 ),
                 ListTileCustom(
@@ -57,6 +59,7 @@ class ShowModalBottomSheet extends StatelessWidget {
                     providerRead.isFiltersDataChange('PRICE: LOW TO HIGH');
                   },
                   icon: Icons.price_change_outlined,
+                  color: Colors.green,
                   title: 'PRICE: LOW TO HIGH',
                 ),
                 ListTileCustom(
@@ -66,6 +69,7 @@ class ShowModalBottomSheet extends StatelessWidget {
                     providerRead.isFiltersDataChange('RATING: BEST RATING');
                   },
                   icon: Icons.star,
+                  color: AppColors.mainAppColor,
                   title: 'PRICE: BEST RATING',
                 ),
               ],
