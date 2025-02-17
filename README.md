@@ -33,3 +33,26 @@
 <h1>7. App Drawer</h1>
 
 ![1724246143583](https://github.com/user-attachments/assets/b6208042-5c83-40ac-8103-0cc799f561b4)
+
+# am_shop_provider
+
+This is a Flutter project for a e-commerce application. <br>
+Using Provider State Management.
+
+## Simple Setup Steps
+
+1. **Clone the Repository**
+   ```sh
+   git clone https://github.com/armaan277/am_shop_provider.git
+
+2. **Navigate to the Project Directory**
+   ```sh
+   cd am_shop_provider
+
+3. **Get Flutter Dependencies**
+   ```sh
+   flutter pub get
+
+4. **Run the App**
+   ```sh
+   flutter run
